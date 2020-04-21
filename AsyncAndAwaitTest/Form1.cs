@@ -23,11 +23,9 @@ namespace AsyncAndAwaitTest
             try
             {
                 Console.WriteLine("test");
-                //textBox1.Text = "111 balabala. my thread id is:" + Thread.CurrentThread.ManagedThreadId + "\r\n";
                 ShowMessage("111 balabala. my thread id is:" + Thread.CurrentThread.ManagedThreadId);
                 var resultTask = MethodAsync();
                 textBox1.Text += await resultTask;
-                //textBox1.Text += "222 balabala. my thread id is:" + Thread.CurrentThread.ManagedThreadId + "\r\n";
                 ShowMessage("222 balabala. my thread id is:" + Thread.CurrentThread.ManagedThreadId);
             }
             catch (Exception ex)
@@ -41,7 +39,6 @@ namespace AsyncAndAwaitTest
         {
             var resultFromTimeConsumingMethod = TimeConsumingMethod();
             string result = await resultFromTimeConsumingMethod + " + MethodAsync. my thread id is:" + Thread.CurrentThread.ManagedThreadId + "\r\n";
-            //textBox1.Text += result;
             ShowMessage(result);
             return result;
         }
@@ -50,10 +47,8 @@ namespace AsyncAndAwaitTest
         {
             var task = Task.Run(() =>
             {
-                //textBox1.Text += "Helo I am TimeConsumingMethod. My Thread ID is :" + Thread.CurrentThread.ManagedThreadId + "/r/n";
                 ShowMessage("Helo I am TimeConsumingMethod. My Thread ID is :" + Thread.CurrentThread.ManagedThreadId);
                 Thread.Sleep(5000);
-                //textBox1.Text += "Helo I am TimeConsumingMethod after Sleep(5000). My Thread ID is :" + Thread.CurrentThread.ManagedThreadId + "/r/n";
                 ShowMessage("Helo I am TimeConsumingMethod after Sleep(5000). My Thread ID is :" + Thread.CurrentThread.ManagedThreadId);
                 Thread.Sleep(5000);
                 return "Hello I am TimeConsumingMethod";
@@ -70,7 +65,6 @@ namespace AsyncAndAwaitTest
 
             }
             string result = await resultFromTimeConsumingMethod + " + MethodAsync. my thread id is:" + Thread.CurrentThread.ManagedThreadId + "\r\n";
-            //textBox1.Text += result;
             ShowMessage(result);
             return result;
         }
@@ -93,7 +87,6 @@ namespace AsyncAndAwaitTest
         private void ShowMessage(string message)
         {
             if (!textBox1.InvokeRequired)
-                //textBox1.Text += message + "\r\n";
                 textBox1.AppendText(message + "\r\n");
             else
                 textBox1.Invoke(new Action<string>(ShowMessage), new object[] { message });
@@ -107,10 +100,6 @@ namespace AsyncAndAwaitTest
 
         private async void btn_SimpleAsync_Click(object sender, EventArgs e)
         {
-            //var t = Task.Run(() =>
-            //{
-
-            //});
             var resultTask = MethodAsync();
             textBox1.Text += await resultTask;
         }
@@ -142,9 +131,6 @@ namespace AsyncAndAwaitTest
             var returnResult = await resultTask;
             if (returnResult.Flag)
             {
-                //textBox1.Text += returnResult.ReturnMessage1 + "\r\n";
-                //textBox1.Text += returnResult.ReturnMessage2 + "\r\n";
-                //textBox1.Text += returnResult.ReturnMessage3 + "\r\n";
                 textBox1.AppendText(returnResult.ReturnMessage1 + "\r\n");
                 textBox1.AppendText(returnResult.ReturnMessage2 + "\r\n");
                 textBox1.AppendText(returnResult.ReturnMessage3 + "\r\n");
@@ -155,10 +141,6 @@ namespace AsyncAndAwaitTest
         {
             for (int i = 0; i < 10; i++)
             {
-                //if (i == 3)
-                //    Thread.Sleep(100);
-                //else
-                //Thread.Sleep(10);
                 textBox1.AppendText(( MethodAsync2(i))+ "\r\n");
                 Thread.Sleep(50);
                 textBox1.AppendText(string.Format("main thread output:{0};thread id is:{1};\r\n", i, Thread.CurrentThread.ManagedThreadId));
@@ -175,10 +157,6 @@ namespace AsyncAndAwaitTest
                     if (inputValue % 2 == 0)
                         Thread.Sleep(2000);
                     ShowMessage(string.Format("async function output: input values is :{0};thread id is:{1};runing count is:{2}", inputValue, Thread.CurrentThread.ManagedThreadId, i));
-                    //Action action = () => {
-                    //    textBox1.AppendText(string.Format("input values is :{0};thread id is:{1};runing count is:{2}\r\n", inputValue, Thread.CurrentThread.ManagedThreadId,i));
-                    //};
-                    //textBox1.Invoke(action);
                 }
                 return "you input is:"+ inputValue;
             });
